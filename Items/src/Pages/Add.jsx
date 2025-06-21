@@ -19,7 +19,7 @@ const [batman, setBatman] = useState({
   ];
 
   const flash=import.meta.env.VITE_API_URL;
-
+  const [load,setLoad]=useState(false);
 const handleInputChange = (e) => {
     const { name, value } = e.target;
     setBatman(prev => ({
@@ -51,9 +51,8 @@ const handleInputChange = (e) => {
   };
 
 const handleSubmit = async(e) => {
-  e.preventDefault();
+  setLoad(true);
   const { rahul, superman, ironman, joker, robin } = batman;
-
     if (!rahul || !superman || !ironman || !joker || robin.length === 0) {
       toast.warn('All fields are required!', {
         position: "top-right",
@@ -61,6 +60,7 @@ const handleSubmit = async(e) => {
         theme: "light",
         transition: Bounce,
       });
+      setLoad(false)
       return;
   }
   else{
@@ -77,7 +77,7 @@ const handleSubmit = async(e) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-
+      setLoad(false)
   toast.success(res?.data?.msg || "Item uploaded successfully", {
     position: "top-right",
     autoClose: 5000,
@@ -94,6 +94,7 @@ const handleSubmit = async(e) => {
   });
 
    } catch (err) {
+    setLoad(false)
 toast.error(err?.response?.data?.msg || "Upload failed", {
    position: "top-right",
    autoClose: 5000,
@@ -269,11 +270,16 @@ return (
       <div className="pt-6">
         <button
           type="button"
-          onClick={handleSubmit}
-          className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 font-medium"
+          onClick={()=>{
+              if (!load) handleSubmit();
+          }}
+          className={`w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 font-medium `}
         >
+          {!load&&<>
           <Save className="w-5 h-5" />
           Add Item
+          </>}
+          {load && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-900 mx-auto mb-4"></div>}
         </button>
       </div>
 

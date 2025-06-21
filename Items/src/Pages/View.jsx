@@ -46,7 +46,7 @@ export default function ViewItemPage() {
         <main className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex items-center justify-center min-h-96 text-center">
             <div>
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-900 mx-auto mb-4"></div>
               <p className="text-gray-600 dark:text-gray-300">Loading items...</p>
             </div>
           </div>

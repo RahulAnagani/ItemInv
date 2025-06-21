@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Package, ImageIcon } from 'lucide-react';
+import { ArrowLeft, Package, ImageIcon, MessageCircle } from 'lucide-react';
 import Header from '../Components/Header';
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import axios from "axios";
@@ -43,6 +43,15 @@ const ItemDetailPage = () => {
         navigate(-1);
     };
 
+    const handleEnquire = () => {
+        toast.success("Enquiry initiated successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "light",
+            transition: Bounce,
+        });
+    };
+
     if (loading) {
         return (
             <>
@@ -64,7 +73,7 @@ const ItemDetailPage = () => {
           <main className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-center min-h-96">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-900 mx-auto mb-4"></div>
                 <p className="text-gray-600 dark:text-gray-300">Loading item details...</p>
               </div>
             </div>
@@ -103,7 +112,7 @@ const ItemDetailPage = () => {
               </p>
               <button
                 onClick={handleGoBack}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                className="inline-flex cursor-pointer items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Go Back
@@ -136,7 +145,7 @@ const ItemDetailPage = () => {
             <div className="mb-6">
               <button
                 onClick={handleGoBack}
-                className="inline-flex items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                className="inline-flex cursor-pointer items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Items
@@ -192,7 +201,7 @@ const ItemDetailPage = () => {
                             <img
                               src={`${api}/uploads/${image}`}
                               alt={`Additional ${index + 1}`}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full cursor-pointer object-cover"
                             />
                           </button>
                         ))}
@@ -228,7 +237,7 @@ const ItemDetailPage = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-4 mb-8">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                       Item Details
                     </h2>
@@ -254,8 +263,18 @@ const ItemDetailPage = () => {
                     </div>
                   </div>
 
+                  <div className="mb-6">
+                    <button
+                      onClick={handleEnquire}
+                      className="w-full inline-flex cursor-pointer items-center justify-center px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transform hover:scale-[1.02] transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                      <MessageCircle className="w-5 h-5 mr-2" />
+                      Enquire
+                    </button>
+                  </div>
+
                   {item.additionalImages && item.additionalImages.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-500">
+                    <div className="pt-6 border-t border-gray-200 dark:border-gray-500">
                       <div className="flex items-center text-gray-600 dark:text-gray-300">
                         <ImageIcon className="w-4 h-4 mr-2" />
                         <span className="text-sm">
